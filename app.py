@@ -7,11 +7,17 @@ import json
 
 # --- 1. 初期設定 ---
 app = Flask(__name__)
-CORS(app) # ★★★ すべてのルートでCORSを許可します ★★★
+
+# ★★★ エラー修正箇所 ★★★
+# 公開したゲーム画面からの通信を許可するように設定します
+CORS(app, resources={r"/api/*": {"origins": "https://cheery-fengliu-3d3e71.netlify.app"}})
 
 # ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-# ここにあなたの「新しい」「安全な」APIキーを貼り付けてください
+# Renderの環境変数に設定するため、この行は不要になります
+# API_KEY = "..." 
 # ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+
+# Renderの環境変数からAPIキーを読み込みます
 API_KEY = os.environ.get('API_KEY')
 
 genai.configure(api_key=API_KEY)
